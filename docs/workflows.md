@@ -8,6 +8,19 @@ Tessaly-dev/.github holds three reusable workflows. Each repository calls them w
 | `reusable-stale.yml` | Closes `status: pending-info` issues after 21 quiet days and pull requests after 44 | `issues: write`, `pull-requests: write` |
 | `reusable-triage.yml` | Keeps one status label per issue, reopens triage when the reporter replies, closes duplicates | `issues: write` |
 
+## Which repositories use them
+
+Every public repository in Tessaly-dev calls all three. Add a new repository to this table when you add its caller files.
+
+| Repository | Labels | Stale | Triage |
+| --- | --- | --- | --- |
+| [.github](https://github.com/Tessaly-dev/.github) | yes | yes | yes |
+| [tessaly](https://github.com/Tessaly-dev/tessaly) | yes | yes | yes |
+| [tessaly.dev](https://github.com/Tessaly-dev/tessaly.dev) | yes | yes | yes |
+| [extensions](https://github.com/Tessaly-dev/extensions) | yes | yes | yes |
+
+The labels are the same everywhere, so an issue moved between repositories keeps its labels.
+
 ## Add them to a repository
 
 Create these three files in the repository. Pin `<sha>` to a commit on `main` of Tessaly-dev/.github. Dependabot bumps the pin.

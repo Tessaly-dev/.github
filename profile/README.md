@@ -26,7 +26,9 @@ Security comes first. Tessaly binds to localhost by default, requires login, and
 | Repository | What it is |
 | --- | --- |
 | [tessaly](https://github.com/tessaly-dev/tessaly) | The daemon, CLI (`tess`) and web UI. Coming soon. |
-| [.github](https://github.com/tessaly-dev/.github) | This profile and the default community files for the org. |
+| [tessaly.dev](https://github.com/tessaly-dev/tessaly.dev) | The website and docs at [tessaly.dev](https://tessaly.dev). Coming soon. |
+| [extensions](https://github.com/tessaly-dev/extensions) | The signed index of community extensions. Coming soon. |
+| [.github](https://github.com/tessaly-dev/.github) | This profile, the default community files, and the shared labels and workflows for every repo. |
 
 ## Get involved
 
