@@ -1,0 +1,82 @@
+# Keeps triage status labels tidy on issues:
+# - a new issue with no status gets "status: needs-triage"
+# - adding a status label removes the other status labels, so there is one at a time
+# - when the reporter replies to a "status: pending-info" issue, it goes back to needs-triage
+# - adding "duplicate" closes the issue with the duplicate reason
+# The script reads issue data through the API only. Titles and bodies never reach a shell.
+name: Triage (reusable)
+
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  triage:
+    if: github.event.issue.pull_request == null
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    concurrency:
+      group: triage-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const STATUS = [
+              'status: needs-triage',
+              'status: triaged',
+              'status: in-progress',
+              'status: pending-info',
+              'status: blocked',
+            ];
+            const { owner, repo } = context.repo;
+            const issue = context.payload.issue;
+            const issue_number = issue.number;
+            const names = issue.labels.map((l) => l.name);
+            const { action } = context.payload;
+
+            const addLabel = (name) =>
+              github.rest.issues.addLabels({ owner, repo, issue_number, labels: [name] });
+            const removeLabel = async (name) => {
+              try {
+                await github.rest.issues.removeLabel({ owner, repo, issue_number, name });
+              } catch (err) {
+                if (err.status !== 404) throw err;
+              }
+            };
+
+            if (context.eventName === 'issues' && action === 'opened') {
+              if (!names.some((n) => STATUS.includes(n))) await addLabel('status: needs-triage');
+              return;
+            }
+
+            if (context.eventName === 'issues' && action === 'labeled') {
+              const added = context.payload.label.name;
+              if (STATUS.includes(added)) {
+                for (const n of names) {
+                  if (STATUS.includes(n) && n !== added) await removeLabel(n);
+                }
+              }
+              if (added === 'duplicate' && issue.state === 'open') {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number,
+                  body: 'A maintainer marked this as a duplicate, so we are closing it. ' +
+                        'Follow the original issue linked above for updates. Thanks for the report.',
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number, state: 'closed', state_reason: 'duplicate',
+                });
+              }
+              return;
+            }
+
+            if (context.eventName === 'issue_comment' && action === 'created') {
+              const fromReporter = context.payload.comment.user.login === issue.user.login;
+              if (fromReporter && issue.state === 'open' && names.includes('status: pending-info')) {
+                await removeLabel('status: pending-info');
+                await addLabel('status: needs-triage');
+              }
+            }

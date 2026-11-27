@@ -1,0 +1,39 @@
+# Syncs labels from labels.yml in Tessaly-dev/.github into the calling repository.
+# Each repository calls this with its own GITHUB_TOKEN, so no stored secret is needed.
+name: Sync labels (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      dry-run:
+        description: Print the changes without making them
+        type: boolean
+        default: false
+
+permissions: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Check out the shared labels file
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: Tessaly-dev/.github
+          ref: main
+          persist-credentials: false
+          sparse-checkout: |
+            labels.yml
+            scripts
+
+      - name: Sync labels
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          DRY_RUN: ${{ inputs.dry-run && '--dry-run' || '' }}
+        run: yq -o=json labels.yml | python3 scripts/sync_labels.py --repo "$REPO" $DRY_RUN

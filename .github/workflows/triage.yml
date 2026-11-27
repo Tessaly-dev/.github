@@ -1,0 +1,15 @@
+name: Triage
+
+on:
+  issues:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created]
+
+permissions: {}
+
+jobs:
+  triage:
+    permissions:
+      issues: write
+    uses: ./.github/workflows/reusable-triage.yml
