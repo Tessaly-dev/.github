@@ -1,6 +1,6 @@
 # Contributing to Tessaly
 
-Thanks for helping. The full guide lives in the main repository: [tessaly-dev/tessaly CONTRIBUTING.md](https://github.com/tessaly-dev/tessaly/blob/main/CONTRIBUTING.md) (coming soon).
+Thanks for helping. The full guide lives in the main repository: [tessaly-dev/tessaly CONTRIBUTING.md](https://github.com/tessaly-dev/tessaly/blob/main/CONTRIBUTING.md).
 
 The short version:
 

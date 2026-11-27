@@ -10,7 +10,7 @@ Tessaly-dev/.github holds three reusable workflows. Each repository calls them w
 
 ## Which repositories use them
 
-Every public repository in Tessaly-dev calls all three. Add a new repository to this table when you add its caller files.
+Every public repository in Tessaly-dev calls all three, except homebrew-tap, which only the release workflow writes to and which takes no issues. Add a new repository to this table when you add its caller files.
 
 | Repository | Labels | Stale | Triage |
 | --- | --- | --- | --- |

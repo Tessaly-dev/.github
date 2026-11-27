@@ -11,23 +11,22 @@
 
 Tessaly is an open source, local-first tool for running coding agents side by side. Each agent gets its own git worktree, so they never step on each other. You review the diffs, open the pull requests and keep everything on hardware you control.
 
-- Works with Claude Code, Codex, any CLI agent, and agents that speak ACP
-- Kanban board to see what each agent is doing and what needs you
-- Diff review and pull requests on GitHub, GitLab and Bitbucket
-- Issue import from GitHub, GitLab, Linear, Jira and Bitbucket
-- Previews of running apps through one port
-- Private local memory, stored as Markdown on your machine
-- Self-hosted: one Go binary with a browser UI, reachable from your phone over your own SSH tunnel, VPN or reverse proxy
+- Runs any CLI agent you set up, such as Claude Code or Codex, in a live terminal in your browser
+- A home view of what needs you, and a board of every workspace
+- Diff review, and pull requests on GitHub with their CI checks
+- Resume an agent that a restart cut off
+- One Go binary with a browser UI, on your own machine or in Docker
 
-Security comes first. Tessaly binds to localhost by default, requires login, and never sends your code or memory to a cloud service of its own.
+Security comes first. Tessaly listens on 127.0.0.1 by default, requires sign-in with a passkey or a login token, and never sends your code to a cloud service of its own.
 
 ## Repositories
 
 | Repository | What it is |
 | --- | --- |
-| [tessaly](https://github.com/tessaly-dev/tessaly) | The daemon, CLI (`tess`) and web UI. Coming soon. |
+| [tessaly](https://github.com/tessaly-dev/tessaly) | The daemon, CLI (`tess`) and web UI. |
 | [tessaly.dev](https://github.com/tessaly-dev/tessaly.dev) | The website and docs at [tessaly.dev](https://tessaly.dev). Coming soon. |
 | [extensions](https://github.com/tessaly-dev/extensions) | The signed index of community extensions. Coming soon. |
+| [homebrew-tap](https://github.com/tessaly-dev/homebrew-tap) | The Homebrew tap. Releases update it. |
 | [.github](https://github.com/tessaly-dev/.github) | This profile, the default community files, and the shared labels and workflows for every repo. |
 
 ## Get involved
