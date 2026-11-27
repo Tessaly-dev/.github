@@ -1,0 +1,123 @@
+# Labels shared by every Tessaly-dev repository.
+# Change labels with a pull request to this file. The sync workflow in each
+# repository creates and updates labels from it. It never deletes a label;
+# it lists unknown labels in the run log so a maintainer can remove them.
+#
+# Fields: name, color (6 hex digits, no #), description (max 100 chars),
+# aliases (optional old names, renamed in place so issues keep the label).
+
+# Type: one per issue or PR
+- name: "type: bug"
+  color: "D73A4A"
+  description: "Something does not work as expected"
+  aliases: ["bug"]
+- name: "type: feature"
+  color: "1D76DB"
+  description: "A new feature or a change to how something works"
+  aliases: ["enhancement"]
+- name: "type: docs"
+  color: "0E8A8A"
+  description: "Documentation only"
+  aliases: ["documentation"]
+- name: "type: chore"
+  color: "8B949E"
+  description: "Build, CI, refactoring or other upkeep"
+
+# Area: one or more
+- name: "area: daemon"
+  color: "C5DEC9"
+  description: "The Go daemon and its HTTP server"
+- name: "area: ui"
+  color: "C5DEC9"
+  description: "The browser UI, including the phone layout"
+- name: "area: cli"
+  color: "C5DEC9"
+  description: "The tess command line tool"
+- name: "area: agents"
+  color: "C5DEC9"
+  description: "Agent adapters, ACP and the generic CLI adapter"
+- name: "area: worktrees"
+  color: "C5DEC9"
+  description: "Git worktrees, branches and merge conflict help"
+- name: "area: memory"
+  color: "C5DEC9"
+  description: "Local Markdown and SQLite memory over MCP"
+- name: "area: auth"
+  color: "C5DEC9"
+  description: "Passkeys, tokens and remote access"
+- name: "area: integrations"
+  color: "C5DEC9"
+  description: "GitHub, GitLab, Bitbucket, Linear and Jira"
+- name: "area: ci"
+  color: "C5DEC9"
+  description: "CI, releases and packaging"
+- name: "area: website"
+  color: "C5DEC9"
+  description: "The tessaly.dev website"
+
+# Priority: set at triage
+- name: "priority: critical"
+  color: "B60205"
+  description: "Breaks core use or data, fix before anything else"
+- name: "priority: high"
+  color: "D93F0B"
+  description: "Important, plan for the next release"
+- name: "priority: medium"
+  color: "FBCA04"
+  description: "Worth doing soon"
+- name: "priority: low"
+  color: "FEF2C0"
+  description: "Nice to have"
+
+# Status: exactly one while an issue is open
+- name: "status: needs-triage"
+  color: "F5A623"
+  description: "New, a maintainer has not looked yet"
+- name: "status: triaged"
+  color: "FAD8A0"
+  description: "Reviewed and labelled, ready to pick up"
+- name: "status: in-progress"
+  color: "E08E0B"
+  description: "Someone is working on it"
+- name: "status: pending-info"
+  color: "FFE7B3"
+  description: "Waiting on the reporter, closes after 21 quiet days"
+- name: "status: blocked"
+  color: "9A5B00"
+  description: "Waiting on something outside this issue"
+
+# Resolution: added when closing
+- name: "duplicate"
+  color: "CFD3D7"
+  description: "Already reported, see the linked issue"
+- name: "wontfix"
+  color: "CFD3D7"
+  description: "We will not change this"
+- name: "invalid"
+  color: "CFD3D7"
+  description: "Not a bug or not about Tessaly"
+
+# Community: exact names, GitHub's contribute page looks for these
+- name: "good first issue"
+  color: "7FD48A"
+  description: "Small and well described, good for a first contribution"
+- name: "help wanted"
+  color: "7FD48A"
+  description: "Maintainers would welcome a pull request"
+
+# Special
+- name: "security"
+  color: "1B1F23"
+  description: "Security hardening, never closed by the stale bot"
+- name: "pinned"
+  color: "F5A623"
+  description: "Keep open, never closed by the stale bot"
+- name: "dependencies"
+  color: "0366D6"
+  description: "Dependency updates, mostly from Dependabot"
+- name: "breaking-change"
+  color: "B60205"
+  description: "Changes behaviour, config or the API in a way users notice"
+- name: "stale"
+  color: "EDEDED"
+  description: "No activity, the bot closes it soon unless someone replies"

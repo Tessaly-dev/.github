@@ -1,0 +1,44 @@
+# Closes issues that wait on the reporter, and pull requests nobody has touched.
+# Policy agreed on 2026-11-27: valid open issues are never closed for being old.
+name: Stale (reusable)
+
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  stale:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
+        with:
+          # Issues: only those waiting on the reporter. 14 days to stale, 7 more to close.
+          only-issue-labels: "status: pending-info"
+          days-before-issue-stale: 14
+          days-before-issue-close: 7
+          stale-issue-label: stale
+          close-issue-reason: not_planned
+          stale-issue-message: >
+            We asked for more details 14 days ago and have not heard back.
+            This issue closes in 7 days unless someone replies.
+          close-issue-message: >
+            Closing because we did not get the details we needed. Thanks for the report.
+            Reply with the missing information and a maintainer will reopen it.
+          # Pull requests: 30 days with no activity to stale, 14 more to close. Drafts are left alone.
+          days-before-pr-stale: 30
+          days-before-pr-close: 14
+          exempt-draft-pr: true
+          stale-pr-label: stale
+          stale-pr-message: >
+            This pull request has had no activity for 30 days. It closes in 14 days
+            unless someone comments or pushes a commit.
+          close-pr-message: >
+            Closing after 44 days without activity. Thanks for the work. Reopen it,
+            or open a new pull request, when you want to pick it up again.
+          exempt-issue-labels: "security,pinned,priority: critical,status: in-progress,status: blocked"
+          exempt-pr-labels: "security,pinned,priority: critical,status: in-progress,status: blocked"

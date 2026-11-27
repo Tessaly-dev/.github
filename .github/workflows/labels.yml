@@ -1,0 +1,21 @@
+name: Labels
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - labels.yml
+      - scripts/sync_labels.py
+      - .github/workflows/reusable-labels.yml
+  schedule:
+    - cron: "17 4 * * 1" # Mondays 04:17 UTC, puts back labels someone edited by hand
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  sync:
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/reusable-labels.yml

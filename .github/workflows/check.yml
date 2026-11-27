@@ -1,0 +1,50 @@
+# Checks pull requests that change labels or the sync script: validates labels.yml,
+# runs the unit tests, and prints what the sync would change. Read-only.
+name: Check
+
+on:
+  pull_request:
+    paths:
+      - labels.yml
+      - scripts/**
+      - .github/workflows/**
+  push:
+    branches: [main]
+    paths:
+      - labels.yml
+      - scripts/**
+
+permissions: {}
+
+jobs:
+  labels:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Convert labels.yml to JSON
+        shell: bash
+        run: yq -o=json labels.yml > "$RUNNER_TEMP/labels.json"
+
+      - name: Validate labels
+        shell: bash
+        run: python3 scripts/sync_labels.py --validate < "$RUNNER_TEMP/labels.json"
+
+      - name: Unit tests
+        shell: bash
+        env:
+          LABELS_JSON: ${{ runner.temp }}/labels.json
+        run: python3 -m unittest discover -s scripts -v
+
+      - name: Dry run against this repository
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: python3 scripts/sync_labels.py --repo "$REPO" --dry-run < "$RUNNER_TEMP/labels.json"
